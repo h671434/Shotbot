@@ -6,7 +6,7 @@ import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.data.FieldData;
 import shotbot.data.prediction.PredictionData;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 
 public class GetNextReachable extends GoToPrediction {
@@ -28,7 +28,7 @@ public class GetNextReachable extends GoToPrediction {
 		Vec3 ballToLeftGoalDirection = goalLeft.minus(nextReachable.position).normalized();
 		Vec3 ballToRightGoalDirection = goalRight.minus(nextReachable.position).normalized();
 		
-		Vec3 targetDirection = SteerUtils.clamp(
+		Vec3 targetDirection = MathUtils.clamp(
 				carToTargetDirection, 
 				ballToLeftGoalDirection, 
 				ballToRightGoalDirection);

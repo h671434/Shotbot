@@ -4,7 +4,7 @@ import shotbot.data.BallData;
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.data.prediction.PredictionData;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 import shotbot.mechanics.Dodge;
 import shotbot.mechanics.Drive;
@@ -28,7 +28,7 @@ public class Kickoff extends State {
             }
         }
                 
-        double sign = SteerUtils.sign(data.car.position.y);
+        double sign = MathUtils.sign(data.car.position.y);
         
         Vec3 ball = new Vec3(0, 0, BALL_RADIUS);
         Vec3 carToBall = ball.minus(data.car.position);

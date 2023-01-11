@@ -5,11 +5,13 @@ import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.data.prediction.PredictionData;
 import shotbot.math.Mat3x3;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 
 public class Aerial implements Mechanic {
 
+	private static final Vec3 GRAVITY = new Vec3(0, 0, -650); // 
+	
 	private Vec3 target;
 	private double startTime;
 	private boolean done = false;
@@ -62,20 +64,20 @@ public class Aerial implements Mechanic {
 	}
 	
 	private static double pitchYawPD(double angle, double rate) {
-		return SteerUtils.cap((Math.pow(35*(angle+rate), 3)) / 10, -1.0, 1.0);
+		return MathUtils.cap((Math.pow(35*(angle+rate), 3)) / 10, -1.0, 1.0);
 	}
 	
 	private static double rollPD(double angle, double angVelx) {
 		double angVelNorm = angVelx / 5.5;
 		double angleNorm = angle / (Math.PI);
-		double deltaTime = SteerUtils.DELTA_TIME;
+		double deltaTime = DataPacket.DELTA_TIME;
 		
 		double Dr = CarData.ANGULAR_DRAG.z;
 		double Tr = CarData.ANGULAR_TORQUE.z;
 		
-		double roll = Math.pow(angleNorm + (SteerUtils.sign(angleNorm - angVelNorm) * Tr + Dr) * angVelNorm * deltaTime , 3) * 10;
+		double roll = Math.pow(angleNorm + (MathUtils.sign(angleNorm - angVelNorm) * Tr + Dr) * angVelNorm * deltaTime , 3) * 10;
 		
-		return SteerUtils.cap(roll, -1.0, 1.0);
+		return MathUtils.cap(roll, -1.0, 1.0);
 	}
 	
 	/*
@@ -102,6 +104,14 @@ public class Aerial implements Mechanic {
         });
 		
 		return align(data, target, localUp);
+	}
+
+	private static Vec3 fallPosition(Vec3 position, Vec3 velocity, double time) {
+		return GRAVITY.scaled(Math.pow(time, 2)).scaled(0.5).plus(velocity.scaled(time)).plus(position);
+	}
+
+	private static Vec3 fallVelocity(Vec3 velocity, double time) {
+		return GRAVITY.scaled(time).plus(velocity);
 	}
 	
 }

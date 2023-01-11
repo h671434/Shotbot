@@ -2,7 +2,7 @@ package shotbot.mechanics;
 
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 
 public class HalfFlip implements Mechanic {
@@ -48,27 +48,27 @@ public class HalfFlip implements Mechanic {
 			controls.withThrottle(-1.0);
 			controls.withPitch(1.0);
 			controls.withJump(true);
-			controls.withYaw(SteerUtils.sign(data.car.orientation.up.z) * direction.y / 5);
+			controls.withYaw(MathUtils.sign(data.car.orientation.up.z) * direction.y / 5);
 			
 		} else if (t_firstJumpEnd <= currentTime && currentTime < t_leanBackEnd) {
 			controls.withThrottle(-1.0);
-			controls.withYaw(SteerUtils.sign(data.car.orientation.up.z) * -direction.y / 5);
+			controls.withYaw(MathUtils.sign(data.car.orientation.up.z) * -direction.y / 5);
 						
 			if (currentTime >= t_secondJumpBegin && currentTime < t_secondJumpEnd) {
 
-                controls.withYaw(SteerUtils.sign(data.car.orientation.up.z) * -direction.y / 5);
+                controls.withYaw(MathUtils.sign(data.car.orientation.up.z) * -direction.y / 5);
 				controls.withJump(true);
 				controls.withPitch(1.0);
 				
 			} else {
 				controls = Aerial.recover(data, target.flatten());
 				controls.withPitch(-1.0);
-				controls.withRoll(SteerUtils.sign(controls.getRoll()));
+				controls.withRoll(MathUtils.sign(controls.getRoll()));
 			}
 			
 		} else if (t_leanBackEnd <= currentTime && currentTime < t_straightenEnd) {
 			controls = Aerial.recover(data, target.flatten());
-			controls.withRoll(SteerUtils.sign(controls.getRoll()));
+			controls.withRoll(MathUtils.sign(controls.getRoll()));
 			controls.withBoost(true);
 			
 		} else if (t_straightenEnd <= currentTime) {

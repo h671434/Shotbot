@@ -9,7 +9,7 @@ import shotbot.data.CarData;
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.data.FieldData;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 import shotbot.mechanics.Aerial;
 import shotbot.mechanics.Dodge;
@@ -79,8 +79,8 @@ public class GoTo extends State {
     	
     	Vec3 target = this.target;
     	target = target
-    			.withY(SteerUtils.cap(target.y, FieldData.BACK_WALL_B.y, FieldData.BACK_WALL_A.y))
-    			.withX(SteerUtils.cap(target.x, FieldData.SIDE_WALL_B.x, FieldData.SIDE_WALL_A.x));
+    			.withY(MathUtils.cap(target.y, FieldData.BACK_WALL_B.y, FieldData.BACK_WALL_A.y))
+    			.withX(MathUtils.cap(target.x, FieldData.SIDE_WALL_B.x, FieldData.SIDE_WALL_A.x));
     	
     	if(data.car.hasWheelContact && !data.car.isUpright)
     		target = data.car.position.flatten();

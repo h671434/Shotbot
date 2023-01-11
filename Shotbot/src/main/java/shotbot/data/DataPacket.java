@@ -10,6 +10,8 @@ import java.util.List;
 
 public class DataPacket {
 	
+	public static final double DELTA_TIME = 1 / 120; // gameticks per second
+	
     public final Shotbot bot;
 
     public final CarData car;

@@ -7,7 +7,7 @@ import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.data.FieldData;
 import shotbot.data.prediction.PredictionData;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 import shotbot.mechanics.Aerial;
 import shotbot.mechanics.Dodge;
@@ -34,8 +34,6 @@ public class GoToPrediction extends State {
 	
 	@Override
 	public ControlsOutput exec(DataPacket data) {
-		
-		
 		
 		double currentTime = data.time - startTime;
 		double remainingTime = target.time - currentTime;
