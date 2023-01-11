@@ -10,10 +10,6 @@ import rlbot.gamestate.PhysicsState;
 import shotbot.Shotbot;
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.state.gotopoint.GoToBall;
-import shotbot.state.gotopoint.GoToBoost;
-import shotbot.state.gotoprediction.GoToNextReachable;
-import shotbot.state.gotoprediction.GoToPrediction;
 
 public class StateHandler {
 	
@@ -29,15 +25,15 @@ public class StateHandler {
 		State states[] = {
 				new SaveNet(),
 				new TakeShot(),
-				new GoToNextReachable(),
-				new GoToBoost()
+				new GetNextReachable(),
+				new PickUpBoost()
 		};
 		
 		for(State state : states) 
 			if(state.isViable(data)) 
 				return state;
 		
-		return new GoToBall();
+		return new ChaseBall();
 	}
 	
 	public ControlsOutput exec(DataPacket data) {		
