@@ -1,4 +1,4 @@
-package shotbot.state.gotoprediction;
+package shotbot.state;
 
 import java.awt.Color;
 
@@ -9,7 +9,7 @@ import shotbot.data.prediction.PredictionData;
 import shotbot.math.SteerUtils;
 import shotbot.math.Vec3;
 
-public class GoToNextReachable extends GoToPrediction {
+public class GetNextReachable extends GoToPrediction {
 	
 	private PredictionData nextReachable;
 	

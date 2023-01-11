@@ -1,9 +1,9 @@
-package shotbot.state.gotopoint;
+package shotbot.state;
 
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
 
-public class GoToBoost extends GoTo {
+public class PickUpBoost extends GoTo {
 	
     @Override
     public ControlsOutput exec(DataPacket data) {       

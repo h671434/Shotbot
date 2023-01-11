@@ -1,4 +1,4 @@
-package shotbot.state.gotoprediction;
+package shotbot.state;
 
 import java.awt.Color;
 
@@ -15,7 +15,6 @@ import shotbot.mechanics.DriftTurn;
 import shotbot.mechanics.Drive;
 import shotbot.mechanics.HalfFlip;
 import shotbot.mechanics.WaveDash;
-import shotbot.state.State;
 
 /**
  * Similar to GoTo, except it plans a path to reach target position at a

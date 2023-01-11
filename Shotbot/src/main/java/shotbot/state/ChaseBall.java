@@ -1,9 +1,9 @@
-package shotbot.state.gotopoint;
+package shotbot.state;
 
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
 
-public class GoToBall extends GoTo {
+public class ChaseBall extends GoTo {
 
 	private double startTime = 0;
 	
