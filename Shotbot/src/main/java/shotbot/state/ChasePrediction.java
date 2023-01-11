@@ -5,11 +5,11 @@ import java.awt.Color;
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.data.FieldData;
-import shotbot.data.prediction.PredictionData;
+import shotbot.data.PredictionData;
 import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 
-public class GetNextReachable extends GoToPrediction {
+public class ChasePrediction extends GoToPrediction {
 	
 	private PredictionData nextReachable;
 	

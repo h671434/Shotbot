@@ -23,9 +23,8 @@ public class StateHandler {
 	
 	private State selectState(DataPacket data) {
 		State states[] = {
-				new SaveNet(),
 				new TakeShot(),
-				new GetNextReachable(),
+				new ChasePrediction(),
 				new PickUpBoost()
 		};
 		

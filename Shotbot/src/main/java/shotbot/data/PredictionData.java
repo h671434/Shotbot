@@ -1,11 +1,8 @@
-package shotbot.data.prediction;
+package shotbot.data;
 
 import rlbot.cppinterop.RLBotDll;
 import rlbot.cppinterop.RLBotInterfaceException;
 import rlbot.flat.BallPrediction;
-import shotbot.data.CarData;
-import shotbot.data.DataPacket;
-import shotbot.data.FieldData;
 import shotbot.math.Vec3;
 
 public class PredictionData {
@@ -37,6 +34,26 @@ public class PredictionData {
 	}
 	
 	/**
+	 * Prediction at certain point in time from current time
+	 */
+	public static PredictionData predictionAtTime(DataPacket data, int time) {
+		try {
+			BallPrediction ballPrediction = RLBotDll.getBallPrediction();
+			PredictionData ball = new PredictionData(
+					new Vec3(ballPrediction.slices(time).physics().location()),
+					new Vec3(ballPrediction.slices(time).physics().velocity()),
+					time / 60.0);
+			
+			return ball;
+					
+		} catch (RLBotInterfaceException ignored) {
+
+       	}
+
+		return new PredictionData(data.ball.position, data.ball.velocity, 0);
+	}
+	
+	/**
 	 * Returns next reachable ball position along with its velocity
 	 * and when, relative to current point in time, it will be there.
 	 */
@@ -62,56 +79,7 @@ public class PredictionData {
     	 
        }
 
-	return null;
-	}
-	
-	/**
-	 * Prediction at certain point in time from current time
-	 */
-	public static PredictionData getPredictionAt(DataPacket data, int time) {
-		try {
-			BallPrediction ballPrediction = RLBotDll.getBallPrediction();
-			PredictionData ball = new PredictionData(
-					new Vec3(ballPrediction.slices(time).physics().location()),
-					new Vec3(ballPrediction.slices(time).physics().velocity()),
-					time / 60.0);
-			
-			return ball;
-					
-		} catch (RLBotInterfaceException ignored) {
-
-       	}
-
-		return new PredictionData(data.ball.position, data.ball.velocity, 0);
-	}
-	
-	/**
-	 * Returns point where goal is recieved
-	 */
-	public static PredictionData nextOpponentGoal(DataPacket data) {
-		try {
-			BallPrediction ballPrediction = RLBotDll.getBallPrediction();
-			for (int i = 0; i < 6 * 60; i += 6) {
-				PredictionData ball = new PredictionData(
-						new Vec3(ballPrediction.slices(i).physics().location()),
-						new Vec3(ballPrediction.slices(i).physics().velocity()),
-						i / 60.0);
-
-				Vec3 goal = FieldData.getGoal(data.car.team);
-				if (((goal.y < 0 && ball.position.y <= goal.y) 
-						|| (goal.y > 0 && ball.position.y >= goal.y))
-						&& ball.position.z < FieldData.GOAL_HEIGHT
-						&& ball.position.x < FieldData.GOAL_LENGTH / 2
-						&& ball.position.x < -FieldData.GOAL_LENGTH / 2) {
-					return ball;
-				}
-			}
-
-       } catch (RLBotInterfaceException ignored) {
-
-       }
-
-       return new PredictionData(data.ball.position, data.ball.velocity, 0);
+		return null;
 	}
 	
 }

@@ -1,7 +1,5 @@
 package shotbot.math;
 
-import shotbot.data.CarData;
-
 public class MathUtils {
 
 	public static double sign(double v) {

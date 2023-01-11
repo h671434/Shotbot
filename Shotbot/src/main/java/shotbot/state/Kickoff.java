@@ -3,7 +3,7 @@ package shotbot.state;
 import shotbot.data.BallData;
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.data.prediction.PredictionData;
+import shotbot.data.PredictionData;
 import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 import shotbot.mechanics.Dodge;
