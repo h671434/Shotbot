@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.data.prediction.PredictionData;
+import shotbot.data.PredictionData;
 import shotbot.math.SteerUtils;
 import shotbot.math.Vec3;
 

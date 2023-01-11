@@ -1,13 +1,11 @@
-package shotbot.state;
+package shotbot.state.gotopoint;
 
 import java.awt.Color;
 
 import shotbot.data.BallData;
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.data.FieldData;
-import shotbot.data.prediction.PredictionData;
-import shotbot.math.SteerUtils;
+import shotbot.data.PredictionData;
 import shotbot.math.Vec3;
 import shotbot.mechanics.Aerial;
 import shotbot.mechanics.Dodge;
@@ -15,6 +13,7 @@ import shotbot.mechanics.DriftTurn;
 import shotbot.mechanics.Drive;
 import shotbot.mechanics.HalfFlip;
 import shotbot.mechanics.WaveDash;
+import shotbot.state.State;
 
 /**
  * Similar to GoTo, except it plans a path to reach target position at a
@@ -35,33 +34,33 @@ public class GoToPrediction extends State {
 	@Override
 	public ControlsOutput exec(DataPacket data) {
 		
-		
-		
 		double currentTime = data.time - startTime;
 		double remainingTime = target.time - currentTime;
 		
 		if(remainingTime < 0)
 			return null;
 		
-		// Vector pointing from car to target
+		// Vector pointing from car to target position
 		Vec3 carToTarget = target.position.minus(data.car.position);
+		
 		double dist = carToTarget.mag();
-		
-		Vec3 targetDirection = target.velocity.normalized();
-		
-		Vec3 targetPosition = target.position.offset(targetDirection, -BallData.RADIUS);
 		double targetSpeed = dist / remainingTime;
 		
-		targetPosition = targetPosition.plus(targetDirection.scaledToMag(carToTarget.mag()));
+		// Vector pointing in the direction we wanna go through target position
+		Vec3 targetDirection = target.velocity.normalized();
 		
-		data.bot.renderer.drawLine3d(Color.RED, data.car.position, targetPosition);
+		
+
+		
+		
+		data.bot.renderer.drawLine3d(Color.RED, data.car.position, target.position);
 		
 		ControlsOutput controls = new ControlsOutput();
 		
 		if(!data.car.hasWheelContact)
-			controls = Aerial.recover(data, targetPosition);
+			controls = Aerial.recover(data, target.position);
 		else
-			controls = Drive.driveTowards(data, targetPosition, targetSpeed);	
+			controls = Drive.driveTowards(data, target.position, targetSpeed);	
 		
 		return controls;
 	}

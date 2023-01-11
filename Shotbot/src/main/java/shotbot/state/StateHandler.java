@@ -10,6 +10,8 @@ import rlbot.gamestate.PhysicsState;
 import shotbot.Shotbot;
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
+import shotbot.state.gotopoint.GoToReachable;
+import shotbot.state.gotopoint.GoToBoost;
 
 public class StateHandler {
 	
@@ -25,8 +27,8 @@ public class StateHandler {
 		State states[] = {
 				new SaveNet(),
 				new TakeShot(),
-				new GetNextReachable(),
-				new PickUpBoost()
+				new GoToReachable(),
+				new GoToBoost()
 		};
 		
 		for(State state : states) 

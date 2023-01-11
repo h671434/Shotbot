@@ -1,4 +1,4 @@
-package shotbot.state;
+package shotbot.state.gotopoint;
 
 import java.awt.Color;
 
@@ -17,6 +17,7 @@ import shotbot.mechanics.DriftTurn;
 import shotbot.mechanics.Drive;
 import shotbot.mechanics.HalfFlip;
 import shotbot.mechanics.WaveDash;
+import shotbot.state.State;
 import shotbot.util.SmartRenderer;
 
 public class GoTo extends State {

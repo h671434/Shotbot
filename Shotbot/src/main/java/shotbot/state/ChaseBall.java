@@ -2,6 +2,7 @@ package shotbot.state;
 
 import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
+import shotbot.state.gotopoint.GoTo;
 
 public class ChaseBall extends GoTo {
 

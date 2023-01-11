@@ -1,7 +1,5 @@
 package shotbot.math;
 
-import shotbot.data.CarData;
-
 public class SteerUtils {
 
 	public static final double DELTA_TIME = 1 / 120; // gameticks per second
@@ -10,8 +8,6 @@ public class SteerUtils {
 	private static final double TAU = 0.74704;
 	
 	private static final Vec3 GRAVITY = new Vec3(0, 0, -650); // 
-	private static final Vec3 JUMP_FORCE = new Vec3(0, 0, 292); // local upwards force for nonflip jumps, instant up to 0.2s 
-	private static final Vec3 STICKY_FORCE = new Vec3(0, 0, -325); // local downwards force makes wheels stick to surfaces
 
 	public static double sign(double v) {
 		return v >= 0 ? 1 : -1;

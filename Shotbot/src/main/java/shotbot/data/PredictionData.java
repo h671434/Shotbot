@@ -1,11 +1,8 @@
-package shotbot.data.prediction;
+package shotbot.data;
 
 import rlbot.cppinterop.RLBotDll;
 import rlbot.cppinterop.RLBotInterfaceException;
 import rlbot.flat.BallPrediction;
-import shotbot.data.CarData;
-import shotbot.data.DataPacket;
-import shotbot.data.FieldData;
 import shotbot.math.Vec3;
 
 public class PredictionData {
