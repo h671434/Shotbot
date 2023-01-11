@@ -46,11 +46,9 @@ public class GoToPrediction extends State {
 		double dist = carToTarget.mag();
 		double targetSpeed = dist / remainingTime;
 		
-		// Vector pointing in the direction we wanna go through target position
+		// Vector pointing in the direction we wanna move through the target
 		Vec3 targetDirection = target.velocity.normalized();
 		
-		
-
 		
 		
 		data.bot.renderer.drawLine3d(Color.RED, data.car.position, target.position);
