@@ -9,8 +9,6 @@ import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 
 public class Aerial implements Mechanic {
-
-	private static final Vec3 GRAVITY = new Vec3(0, 0, -650); // 
 	
 	private Vec3 target;
 	private double startTime;
@@ -104,14 +102,6 @@ public class Aerial implements Mechanic {
         });
 		
 		return align(data, target, localUp);
-	}
-
-	private static Vec3 fallPosition(Vec3 position, Vec3 velocity, double time) {
-		return GRAVITY.scaled(Math.pow(time, 2)).scaled(0.5).plus(velocity.scaled(time)).plus(position);
-	}
-
-	private static Vec3 fallVelocity(Vec3 velocity, double time) {
-		return GRAVITY.scaled(time).plus(velocity);
 	}
 	
 }
