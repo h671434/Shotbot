@@ -20,7 +20,7 @@ public class PredictionData {
 	/**
 	 * Is ball reachable for given car?
 	 */
-	private boolean isReachable(CarData car) {
+	public boolean isReachable(CarData car) {
 		Vec3 carToBall = position.minus(car.position);
 		Vec3 carToBallDir = carToBall.normalized();
 		double dist = carToBall.mag();

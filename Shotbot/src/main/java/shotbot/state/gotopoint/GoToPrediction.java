@@ -41,7 +41,7 @@ public class GoToPrediction extends State {
 			return null;
 		
 		// Vector pointing from car to target position
-		Vec3 carToTarget = target.position.minus(data.car.position);
+		Vec3 carToTarget = target.position.minus(data.car.position).flatten();
 		
 		double dist = carToTarget.mag();
 		double targetSpeed = dist / remainingTime;
@@ -49,16 +49,18 @@ public class GoToPrediction extends State {
 		// Vector pointing in the direction we wanna move through the target
 		Vec3 targetDirection = target.velocity.normalized();
 		
-		
+		Vec3 directionToTarget = target.position.plus(targetDirection.scaled(1000));
 		
 		data.bot.renderer.drawLine3d(Color.RED, data.car.position, target.position);
+		data.bot.renderer.drawLine3d(Color.RED, data.car.position, directionToTarget);
+		data.bot.renderer.drawLine3d(Color.RED, target.position, directionToTarget);
 		
 		ControlsOutput controls = new ControlsOutput();
 		
 		if(!data.car.hasWheelContact)
 			controls = Aerial.recover(data, target.position);
 		else
-			controls = Drive.driveTowards(data, target.position, targetSpeed);	
+			controls = Drive.driveTowards(data, directionToTarget, targetSpeed);	
 		
 		return controls;
 	}
