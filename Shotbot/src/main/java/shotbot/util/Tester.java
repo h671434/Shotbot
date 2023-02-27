@@ -24,11 +24,12 @@ public class Tester {
 			GameState gs = new GameState()
 					.withBallState(new BallState()
 		            		.withPhysics(new PhysicsState()
-		            				.withLocation(new DesiredVector3(null, 0F, 100F))
-		            				.withVelocity(new DesiredVector3(0F, 0F, 0F))))
+		            				.withLocation(new DesiredVector3(0F, 0F, 100F))
+		            				.withVelocity(new DesiredVector3(0F, 0F, 0F))
+		            				.withAngularVelocity(new DesiredVector3(0F, 0F, 0F))))
 					.withCarState(data.playerIndex, new CarState()
 							.withPhysics(new PhysicsState()
-									.withLocation(new DesiredVector3(null, -2000F, 20F))));
+									.withLocation(new DesiredVector3(-1000F, -2000F, 20F))));
 			RLBotDll.setGameState(gs.buildPacket());
 			
 			bot.stateHandler.currentState = null;

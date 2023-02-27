@@ -1,6 +1,6 @@
 package shotbot.state.gotopoint;
 
-import shotbot.data.ControlsOutput;
+import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
 
 public class GoToBoost extends GoTo {

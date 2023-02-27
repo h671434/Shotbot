@@ -13,7 +13,7 @@ import rlbot.render.RenderPacket;
 import rlbot.render.Renderer;
 import shotbot.data.CarData;
 import shotbot.data.DataPacket;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 
 public class SmartRenderer extends Renderer{
@@ -78,7 +78,7 @@ public class SmartRenderer extends Renderer{
         try {
             BallPrediction ballPrediction = RLBotDll.getBallPrediction();
             Vec3 previousLocation = null;
-            int stop = (int) (60 * SteerUtils.cap(duration, 0, 6.0));
+            int stop = (int) (60 * MathUtils.cap(duration, 0, 6.0));
             for (int i = 0; i < ballPrediction.slicesLength(); i += 4) {
                 PredictionSlice slice = ballPrediction.slices(i);
                 if (i >= stop) {

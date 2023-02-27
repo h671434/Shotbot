@@ -1,8 +1,8 @@
 package shotbot.mechanics;
 
-import shotbot.data.ControlsOutput;
+import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 
 public class DriftTurn implements Mechanic {
@@ -21,7 +21,7 @@ public class DriftTurn implements Mechanic {
 		
 		ControlsOutput controls = new ControlsOutput();
 		
-		controls.withSteer(SteerUtils.sign(localTarget.normalized().y) * 1);
+		controls.withSteer(MathUtils.sign(localTarget.normalized().y) * 1);
 		
 		if(Math.abs(localTarget.normalized().y) > 0.5)
 			controls.withSlide(true);

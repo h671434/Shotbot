@@ -1,35 +1,12 @@
-package shotbot.math;
+package shotbot.prediction;
 
-public class SteerUtils {
+import shotbot.math.Vec3;
 
-	public static final double DELTA_TIME = 1 / 120; // gameticks per second
+public class SteerPrediction {
 
 	private static final double VMAX = 1234; // minimum forward velocity with full steer after 7.5 sec (TAU)
 	private static final double TAU = 0.74704;
-	
 	private static final Vec3 GRAVITY = new Vec3(0, 0, -650); // 
-
-	public static double sign(double v) {
-		return v >= 0 ? 1 : -1;
-	}
-
-	public static double cap(double v, double min, double max) {
-		return (Math.min(Math.max(v, min), max));
-	}
-	
-	public static Vec3 clamp(Vec3 direction, Vec3 start, Vec3 end) {
-		Vec3 down = new Vec3(0, 0, -1);
-		boolean isRight = direction.dot(end.cross(down)) < 0;
-		boolean isLeft = direction.dot(start.cross(down)) > 0;
-		
-		if((end.dot(start.cross(down)) < 0) ? (isRight && isLeft) : (isRight || isLeft)) 
-			return direction;
-		
-		if(start.dot(direction) < end.dot(direction))
-			return end;
-		
-		return start;
-	}
 	
 	public static double throttleAcceleration(double velocity) {
 		if(0 <= velocity && velocity < 1400) 
@@ -79,5 +56,4 @@ public class SteerUtils {
 	public static Vec3 fallVelocity(Vec3 velocity, double time) {
 		return GRAVITY.scaled(time).plus(velocity);
 	}
-
 }

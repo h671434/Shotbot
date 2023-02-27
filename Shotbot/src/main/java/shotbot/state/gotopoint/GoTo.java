@@ -2,30 +2,26 @@ package shotbot.state.gotopoint;
 
 import java.awt.Color;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
-import javax.swing.text.Position;
-
+import shotbot.controls.AerialControls;
+import shotbot.controls.ControlsOutput;
+import shotbot.controls.DriveControls;
 import shotbot.data.CarData;
-import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.data.FieldData;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
-import shotbot.mechanics.Aerial;
 import shotbot.mechanics.Dodge;
 import shotbot.mechanics.DriftTurn;
-import shotbot.mechanics.Drive;
 import shotbot.mechanics.HalfFlip;
 import shotbot.mechanics.WaveDash;
 import shotbot.state.State;
-import shotbot.util.SmartRenderer;
 
 public class GoTo extends State {
 	
 	protected Vec3 target = Vec3.ZERO;
 	protected double targetSpeed = 1400;
 	
-	protected Aerial aerial = null;
+	protected AerialControls aerial = null;
 	protected DriftTurn driftturn = null;
 	protected Dodge dodge = null;
 	protected HalfFlip halfflip = null;
@@ -80,8 +76,8 @@ public class GoTo extends State {
     	
     	Vec3 target = this.target;
     	target = target
-    			.withY(SteerUtils.cap(target.y, FieldData.BACK_WALL_B.y, FieldData.BACK_WALL_A.y))
-    			.withX(SteerUtils.cap(target.x, FieldData.SIDE_WALL_B.x, FieldData.SIDE_WALL_A.x));
+    			.withY(MathUtils.cap(target.y, FieldData.BACK_WALL_B.y, FieldData.BACK_WALL_A.y))
+    			.withX(MathUtils.cap(target.x, FieldData.SIDE_WALL_B.x, FieldData.SIDE_WALL_A.x));
     	
     	if(data.car.hasWheelContact && !data.car.isUpright)
     		target = data.car.position.flatten();
@@ -94,7 +90,7 @@ public class GoTo extends State {
         double forwardDotTarget = myCar.orientation.forward.dot(carToTarget.normalized());
     	
     	if (!data.car.hasWheelContact) {
-    		return Aerial.recover(data, null);
+    		return AerialControls.recover(data, null);
     	}
     	
     	allowDodge = allowDodge && lastDodgeEnd + 1 < data.time;
@@ -131,7 +127,7 @@ public class GoTo extends State {
     		wavedash = new WaveDash(data, target);
     	}
 	    
-	    return Drive.driveTowards(data, target, targetSpeed);
+	    return new DriveControls(data, target, targetSpeed);
     }
 
 	@Override

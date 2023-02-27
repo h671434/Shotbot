@@ -1,4 +1,4 @@
-package shotbot.data;
+package shotbot.controls;
 
 import rlbot.ControllerState;
 

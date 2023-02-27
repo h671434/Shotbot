@@ -1,6 +1,6 @@
 package shotbot.mechanics;
 
-import shotbot.data.ControlsOutput;
+import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
 
 public interface Mechanic {

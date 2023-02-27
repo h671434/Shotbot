@@ -1,6 +1,7 @@
 package shotbot.mechanics;
 
-import shotbot.data.ControlsOutput;
+import shotbot.controls.AerialControls;
+import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.math.Vec3;
 
@@ -62,7 +63,7 @@ public class WaveDash implements Mechanic {
 				controls.withJump(true);
             	
 			} else if(!data.car.hasWheelContact) {
-				controls = Aerial.align(data, localTarget.normalized(), localUp);
+				controls = new AerialControls(data, localTarget.normalized(), localUp);
 
 				
 			} else if (data.car.hasWheelContact) {

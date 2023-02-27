@@ -1,8 +1,8 @@
 package shotbot.mechanics;
 
-import shotbot.data.ControlsOutput;
+import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 
 public class Dodge implements Mechanic {
@@ -58,8 +58,8 @@ public class Dodge implements Mechanic {
                 Vec3 direction = localTarget.withZ(0).normalized();
 
                 controls.withPitch(-direction.x);
-                controls.withYaw(SteerUtils.sign(data.car.orientation.up.z) * direction.y);
-                controls.withRoll(SteerUtils.sign(data.car.orientation.up.z) * direction.y);
+                controls.withYaw(MathUtils.sign(data.car.orientation.up.z) * direction.y);
+                controls.withRoll(MathUtils.sign(data.car.orientation.up.z) * direction.y);
             }
 
             if (currentTime >= t_secondJumpBegin) {

@@ -1,6 +1,6 @@
 package shotbot.state;
 
-import shotbot.data.ControlsOutput;
+import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
 
 public abstract class State {

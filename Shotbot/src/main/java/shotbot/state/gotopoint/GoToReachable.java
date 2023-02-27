@@ -2,44 +2,35 @@ package shotbot.state.gotopoint;
 
 import java.awt.Color;
 
-import shotbot.data.ControlsOutput;
+import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.data.FieldData;
-import shotbot.data.PredictionData;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
+import shotbot.prediction.PredictionData;
 
-public class GoToReachable extends GoToPrediction {
+public class GoToReachable extends GoTo {
 	
 	private PredictionData nextReachable;
+	double startTime;
 	
 	@Override
 	public ControlsOutput exec(DataPacket data) {
 		
+		double currentTime = data.time - startTime;
+		double remainingTime = nextReachable.time - currentTime;
+		
+		if(remainingTime < 0)
+			return null;
+		
 		data.bot.renderer.drawStateString("GO TO NEXT REACHABLE");
-		
-		Vec3 carToReachable = nextReachable.position.minus(data.car.position);
-		
-		Vec3 carToTargetDirection = carToReachable.normalized();
-		
-		Vec3 goalLeft = FieldData.getGoalLeft(data.team);
-		Vec3 goalRight = FieldData.getGoalRight(data.team);
-		
-		Vec3 ballToLeftGoalDirection = goalLeft.minus(nextReachable.position).normalized();
-		Vec3 ballToRightGoalDirection = goalRight.minus(nextReachable.position).normalized();
-		
-		Vec3 targetDirection = SteerUtils.clamp(
-				carToTargetDirection, 
-				ballToLeftGoalDirection, 
-				ballToRightGoalDirection);
-		
-		Vec3 targetVelocity = targetDirection.scaledToMag(2300);
-		
-		data.bot.renderer.drawLine3d(Color.BLUE, nextReachable.position, targetDirection);
-		
-		target = new PredictionData(nextReachable.position, targetVelocity, nextReachable.time);
-		
 		data.bot.renderer.drawBallPrediction(Color.RED, 300);
+		
+		Vec3 carToTarget = nextReachable.position.minus(data.car.position);
+		double dist = carToTarget.mag();
+		
+		target = nextReachable.position;
+		targetSpeed = dist / remainingTime;
 
 		return super.exec(data);
 	}

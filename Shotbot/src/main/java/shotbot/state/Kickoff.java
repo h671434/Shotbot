@@ -1,13 +1,13 @@
 package shotbot.state;
 
+import shotbot.controls.ControlsOutput;
+import shotbot.controls.DriveControls;
 import shotbot.data.BallData;
-import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.data.PredictionData;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
 import shotbot.mechanics.Dodge;
-import shotbot.mechanics.Drive;
+import shotbot.prediction.PredictionData;
 
 public class Kickoff extends State {
 	
@@ -28,7 +28,7 @@ public class Kickoff extends State {
             }
         }
                 
-        double sign = SteerUtils.sign(data.car.position.y);
+        double sign = MathUtils.sign(data.car.position.y);
         
         Vec3 ball = new Vec3(0, 0, BALL_RADIUS);
         Vec3 carToBall = ball.minus(data.car.position);
@@ -44,7 +44,7 @@ public class Kickoff extends State {
         double targetTime = distToBall / 2000;
 
         
-        return Drive.driveTowards(data, target, 2300);
+        return new DriveControls(data, target, 2300);
 	}
 
 	@Override

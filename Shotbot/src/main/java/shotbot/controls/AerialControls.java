@@ -1,40 +1,31 @@
-package shotbot.mechanics;
+package shotbot.controls;
 
 import shotbot.data.CarData;
-import shotbot.data.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.data.PredictionData;
 import shotbot.math.Mat3x3;
-import shotbot.math.SteerUtils;
+import shotbot.math.MathUtils;
 import shotbot.math.Vec3;
+import shotbot.mechanics.Mechanic;
+import shotbot.prediction.PredictionData;
 
-public class Aerial implements Mechanic {
+public class AerialControls extends ControlsOutput {
 
-	private Vec3 target;
-	private double startTime;
-	private boolean done = false;
+	private DataPacket data;
+	private Vec3 localTarget;
+	private Vec3 localUp;
 	
-	public Aerial(DataPacket data, Vec3 target) {
-		this.target = target;
-		startTime = data.time;
+	public AerialControls(DataPacket data,  Vec3 localTarget, Vec3 localUp) {
+		this.data = data;
+		this.localTarget = localTarget;
+		this.localUp = localUp;
+		getControls();
 	}
 	
-
-	@Override
-	public ControlsOutput exec(DataPacket data) {
-		return null;
+	private void getControls() {
+		align();
 	}
-
-	@Override
-	public boolean done() {
-		return done;
-	} 
 	
-	/**
-	 * Return controls that rotates car towards target. 
-	 * Vec3 up is the direction to roll the roof of the car. If up = (0, 0, 1), the car turns upright.
-	 */
-	public static ControlsOutput align(DataPacket data, Vec3 localTarget, Vec3 localUp) {
+	private void align() {
 		Mat3x3 orientation = data.car.orientation;
 		Vec3 angularVelocity = data.car.angularVelocity;
 		Vec3 localAngVel = orientation.dot(angularVelocity);
@@ -51,36 +42,31 @@ public class Aerial implements Mechanic {
 		
 		data.bot.renderer.drawStateString("                 " + targetAngles.z);
 		
-		ControlsOutput controls = new ControlsOutput();	
-		controls.withThrottle(1)
-				.withSteer(steer)
-				.withPitch(pitch)
-				.withYaw(yaw)
-				.withRoll(roll);
+		withThrottle(1);
+		withSteer(steer);
+		withPitch(pitch);
+		withYaw(yaw);
+		withRoll(roll);
 		
-		return controls;
 	}
 	
 	private static double pitchYawPD(double angle, double rate) {
-		return SteerUtils.cap((Math.pow(35*(angle+rate), 3)) / 10, -1.0, 1.0);
+		return MathUtils.cap((Math.pow(35*(angle+rate), 3)) / 10, -1.0, 1.0);
 	}
 	
 	private static double rollPD(double angle, double angVelx) {
 		double angVelNorm = angVelx / 5.5;
 		double angleNorm = angle / (Math.PI);
-		double deltaTime = SteerUtils.DELTA_TIME;
+		double deltaTime = MathUtils.DELTA_TIME;
 		
 		double Dr = CarData.ANGULAR_DRAG.z;
 		double Tr = CarData.ANGULAR_TORQUE.z;
 		
-		double roll = Math.pow(angleNorm + (SteerUtils.sign(angleNorm - angVelNorm) * Tr + Dr) * angVelNorm * deltaTime , 3) * 10;
+		double roll = Math.pow(angleNorm + (MathUtils.sign(angleNorm - angVelNorm) * Tr + Dr) * angVelNorm * deltaTime , 3) * 10;
 		
-		return SteerUtils.cap(roll, -1.0, 1.0);
+		return MathUtils.cap(roll, -1.0, 1.0);
 	}
 	
-	/*
-	 * Returns controls to rotate car upright in direction of velocity
-	 */
 	public static ControlsOutput recover(DataPacket data, Vec3 target) {
 		Vec3 velocity = data.car.velocity;
 		
@@ -101,7 +87,7 @@ public class Aerial implements Mechanic {
         		"CAR: " + data.car.position.toString()
         });
 		
-		return align(data, target, localUp);
+		return new AerialControls(data, target, localUp);
 	}
 	
 }

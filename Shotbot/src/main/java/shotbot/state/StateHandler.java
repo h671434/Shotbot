@@ -1,10 +1,11 @@
 package shotbot.state;
 
 import shotbot.Shotbot;
-import shotbot.data.ControlsOutput;
+import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
 import shotbot.state.gotopoint.GoToReachable;
 import shotbot.util.Tester;
+import shotbot.state.gotopoint.GoToBall;
 import shotbot.state.gotopoint.GoToBoost;
 
 public class StateHandler {
@@ -31,12 +32,10 @@ public class StateHandler {
 			if(state.isViable(data)) 
 				return state;
 		
-		return new ChaseBall();
+		return new GoToBall();
 	}
 	
 	public ControlsOutput exec(DataPacket data) {		
-		
-		tester.shotTest(data);
 		
 		if(currentState == null)
 			currentState = selectState(data);

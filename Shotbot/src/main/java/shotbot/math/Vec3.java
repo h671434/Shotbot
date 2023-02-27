@@ -130,8 +130,23 @@ public class Vec3 extends rlbot.vector.Vector3 {
     public Vec3 offset(Vec3 direction, double offsetvalue) {
     	return minus(direction.scaled(offsetvalue));
     }
-
-
+    
+	public Vec3 clamp(Vec3 start, Vec3 end) {
+		Vec3 direction = this;
+		
+		Vec3 down = new Vec3(0, 0, -1);
+		boolean isRight = direction.dot(end.cross(down)) < 0;
+		boolean isLeft = direction.dot(start.cross(down)) > 0;
+		
+		if((end.dot(start.cross(down)) < 0) ? (isRight && isLeft) : (isRight || isLeft)) 
+			return direction;
+		
+		if(start.dot(direction) < end.dot(direction))
+			return end;
+		
+		return start;
+	}
+    
     @Override
     public String toString() {
         return String.format("(%s, %s, %s)", x, y, z);
