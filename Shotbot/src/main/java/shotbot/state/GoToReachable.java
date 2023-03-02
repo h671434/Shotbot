@@ -1,4 +1,4 @@
-package shotbot.state.gotopoint;
+package shotbot.state;
 
 import java.awt.Color;
 

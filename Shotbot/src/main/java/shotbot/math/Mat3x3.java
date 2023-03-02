@@ -107,8 +107,8 @@ public class Mat3x3 {
 		return new Mat3x3(product);
 	}
 	
-	public Vec3 local(Vec3 target) {
-		return dot(target);
+	public Vec3 local(Vec3 carToTarget) {
+		return dot(carToTarget);
 	}
 	
 

@@ -2,8 +2,8 @@ package shotbot.data;
 
 import rlbot.flat.GameTickPacket;
 import shotbot.Shotbot;
-import shotbot.data.boost.BoostManager;
-import shotbot.data.boost.BoostPad;
+import shotbot.boost.BoostManager;
+import shotbot.boost.BoostPad;
 
 import java.util.ArrayList;
 import java.util.List;

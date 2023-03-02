@@ -1,4 +1,4 @@
-package shotbot.state.gotopoint;
+package shotbot.state;
 
 import java.awt.Color;
 
@@ -14,7 +14,6 @@ import shotbot.mechanics.Dodge;
 import shotbot.mechanics.DriftTurn;
 import shotbot.mechanics.HalfFlip;
 import shotbot.mechanics.WaveDash;
-import shotbot.state.State;
 
 public class GoTo extends State {
 	
@@ -78,17 +77,19 @@ public class GoTo extends State {
     	target = target
     			.withY(MathUtils.cap(target.y, FieldData.BACK_WALL_B.y, FieldData.BACK_WALL_A.y))
     			.withX(MathUtils.cap(target.x, FieldData.SIDE_WALL_B.x, FieldData.SIDE_WALL_A.x));
-    	
-    	if(data.car.hasWheelContact && !data.car.isUpright)
-    		target = data.car.position.flatten();
-        
+
         // Subtract the two positions to get a vector pointing from the car to the ball.
         Vec3 carToTarget = target.minus(carPosition);
     	
         double dist = carToTarget.mag();
-        double velocity = data.car.velocity.mag();
+        double velocity = myCar.velocity.mag();
         double forwardDotTarget = myCar.orientation.forward.dot(carToTarget.normalized());
     	
+    	
+    	if(data.car.hasWheelContact && !data.car.isUpright)
+    		target = myCar.orientation.local(carToTarget);
+        
+        
     	if (!data.car.hasWheelContact) {
     		return AerialControls.recover(data, null);
     	}

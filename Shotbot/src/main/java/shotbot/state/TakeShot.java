@@ -60,7 +60,7 @@ public class TakeShot extends State{
 
 	@Override
 	public boolean isViable(DataPacket data) {
-		return true;
+		return false;
 	}
 	
 	private Vec3 findInterceptDirection(Vec3 ball, Vec3 carToBall, int team) {

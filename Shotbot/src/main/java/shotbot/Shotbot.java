@@ -3,9 +3,9 @@ package shotbot;
 import rlbot.Bot;
 import rlbot.ControllerState;
 import rlbot.flat.GameTickPacket;
+import shotbot.boost.BoostManager;
 import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.data.boost.BoostManager;
 import shotbot.state.StateHandler;
 import shotbot.util.SmartRenderer;
 

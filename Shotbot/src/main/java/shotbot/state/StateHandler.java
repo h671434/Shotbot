@@ -3,10 +3,7 @@ package shotbot.state;
 import shotbot.Shotbot;
 import shotbot.controls.ControlsOutput;
 import shotbot.data.DataPacket;
-import shotbot.state.gotopoint.GoToReachable;
 import shotbot.util.Tester;
-import shotbot.state.gotopoint.GoToBall;
-import shotbot.state.gotopoint.GoToBoost;
 
 public class StateHandler {
 	
@@ -22,7 +19,7 @@ public class StateHandler {
 	
 	private State selectState(DataPacket data) {
 		State states[] = {
-//				new SaveNet(),
+				new SaveNet(),
 				new TakeShot(),
 				new GoToReachable(),
 				new GoToBoost()

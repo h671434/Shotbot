@@ -1,4 +1,4 @@
-package shotbot.data.boost;
+package shotbot.boost;
 
 import shotbot.math.Vec3;
 
