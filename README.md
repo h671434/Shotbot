@@ -1,2 +1,4 @@
 # Shotbot
-A Rocket League bot coded in Java
+A hardcoded Rocket League bot coded in Java.
+
+Abandoned (for now)
